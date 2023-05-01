@@ -15,7 +15,7 @@ This guide will show you how to set up a CORS proxy worker on Cloudflare using a
 
     1. Login to your Cloudflare account and select the domain where you want to create the worker.
     2. Open the Workers section and click on "Create a Worker".
-    3. Copy the code from the pre-built script [worker.js](https://www.example.com](https://github.com/sharad-bapat/cors-anywhere-using-cloudflare/blob/main/worker.js) available in this repository.
+    3. Copy the code from the pre-built script [worker.js](https://github.com/sharad-bapat/cors-anywhere-using-cloudflare/blob/main/worker.js) available in this repository.
     4. Replace the "https://example.com/" string in the code with the URL of the external API or resource you want to make requests to.
     5. Save the worker and deploy it to your domain.
     6. Test the worker by sending a request to the proxy URL in the format https://<your_domain>/<your_worker_path>?url=<external_resource_url>.
