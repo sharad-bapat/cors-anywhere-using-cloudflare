@@ -1,0 +1,13 @@
+{
+  // npm run deploy puts this on <name>.<your-subdomain>.workers.dev.
+  "name": "cors-proxy",
+  "main": "worker.js",
+  "compatibility_date": "2026-09-01",
+  "vars": {
+    // Required. The sites allowed to use the proxy, comma-separated, e.g. "https://example.com,http://localhost:8080".
+    // Left empty, the proxy refuses every request. "*" opens it to every site (not recommended).
+    "ALLOWED_ORIGINS": "",
+    // Optional. The only sites it will fetch from, comma-separated; subdomains included. Empty means any public site.
+    "ALLOWED_HOSTS": ""
+  }
+}

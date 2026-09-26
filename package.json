@@ -1,0 +1,14 @@
+{
+  "name": "cors-anywhere-using-cloudflare",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A small, safe-by-default CORS proxy for Cloudflare Workers.",
+  "scripts": {
+    "test": "node --test",
+    "dev": "npx wrangler@4.138.0 dev",
+    "deploy": "npx wrangler@4.138.0 deploy"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}
