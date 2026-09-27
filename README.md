@@ -4,7 +4,7 @@ A small Cloudflare Worker that fetches a public URL for a web page and adds the 
 
 I wrote the first version in an evening in May 2023, so a few browser-only news readers could read feeds that don't send CORS headers. In September 2026 I came back to it, found I had published an open relay, and rewrote it. The write-up is at [sharadbapat.com/experiments/cors-proxy](https://sharadbapat.com/experiments/cors-proxy/).
 
-## What it does
+## Usage
 
 A page on a site you allow asks the Worker for a URL:
 
@@ -16,7 +16,7 @@ const xml = await res.text();
 
 The Worker fetches the URL and returns the body with `Access-Control-Allow-Origin` set to the asking site. The URL it finally reached, after any redirects, comes back in `x-final-url`.
 
-## What it refuses
+## Refused requests
 
 | Request | Answer | Why |
 |---|---|---|
@@ -51,7 +51,7 @@ cd cors-anywhere-using-cloudflare
 npm run deploy
 ```
 
-Or in the Cloudflare dashboard: create a Worker, paste in `worker.js`, and add the variables under **Settings → Variables and Secrets**.
+Or in the Cloudflare dashboard: create a Worker, paste in `worker.js`, and add the variables under Settings, in Variables and Secrets.
 
 To try it locally, put `ALLOWED_ORIGINS="http://localhost:8080"` in a `.dev.vars` file and run `npm run dev`.
 
@@ -63,12 +63,11 @@ npm test
 
 16 tests with Node's built-in runner and a stubbed `fetch`: origins, the preflight, methods, private and odd targets, host limits, headers in both directions, redirects, size limits, timeouts and `HEAD`. I also ran it in the local Workers runtime against real sites.
 
-## What the 2023 version got wrong
+## Bugs in the 2023 version
 
-- **It was an open relay.** Any site, any method (including `POST`, `PUT` and `DELETE`), any URL, `Access-Control-Allow-Origin: *`. Anyone who found a deployment could send any request through it.
-- **It forwarded every request header,** cookies and `Authorization` included, to whatever URL it was given.
-- **The User-Agent never reached the site.** The README said the Worker set one, but the code put it on the preflight response instead of the outgoing request.
-- **The setup steps were wrong in one place.** Step 4 said to replace an `https://example.com/` string that wasn't in the code.
+It was an open relay. It took any site, any method (including `POST`, `PUT` and `DELETE`) and any URL, and answered with `Access-Control-Allow-Origin: *`, so anyone who found a deployment could send any request through it. It also forwarded every request header, cookies and `Authorization` included, to whatever URL it was given.
+
+The User-Agent never reached the site. The README said the Worker set one, but the code put it on the preflight response instead of the outgoing request. And step 4 of the setup said to replace an `https://example.com/` string that wasn't in the code.
 
 Four people starred it and three forked it anyway. If you run a copy of the old version, replace it with this one.
 
